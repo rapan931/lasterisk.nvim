@@ -42,7 +42,7 @@ M.lasterisk_do = function(config)
   local pattern = cword_pattern(cword, config)
 
   set_search(pattern)
-  print(fn.escape(pattern, '\\"'))
+  print("/" .. fn.escape(pattern, '\\"'))
 end
 
 return M
