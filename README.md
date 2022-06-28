@@ -23,12 +23,15 @@ use 'rapan931/lasterisk.nvim'
 vim.api.nvim_set_keymap('n', '*', [[<cmd>lua require("lasterisk").lasterisk_do({})<CR>]], {
   noremap = false
 })
+vim.api.nvim_set_keymap('n', 'g*', [[<cmd>lua require("lasterisk").lasterisk_do({ is_whole = false })<CR>]], {
+  noremap = false
+})
 ```
 
 ## Todo
 
 - [x] Stay asterisk(like `*`)
-- [ ] `is_whole = false` option(like `g*`)
+- [x] `is_whole = false` option(like `g*`)
 - [ ] Visual asterisk
 
 ## Differences from asterisk.vim
