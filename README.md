@@ -39,5 +39,5 @@ vim.api.nvim_set_keymap('n', 'g*', [[<cmd>lua require("lasterisk").lasterisk_do(
 - Not support backward(like `#`).
 - Not support jump asterisk.
 - Not support visual mode blockwise.
-- Not support `exclusire` in the selection option
-- Not support Keep cursor position
+- Not support `exclusive` in the selection option
+- Not support keep cursor position
