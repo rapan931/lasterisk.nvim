@@ -41,6 +41,8 @@ M.lasterisk_do = function(config)
 
   local pattern = cword_pattern(cword, config)
 
+  vim.o.hlsearch = vim.o.hlsearch
+
   set_search(pattern)
   print("/" .. fn.escape(pattern, '\\"'))
 end
