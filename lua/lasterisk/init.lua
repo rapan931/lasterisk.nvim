@@ -1,4 +1,6 @@
+local conf = require('lasterisk.config')
 local fn = vim.fn
+local api = vim.api
 
 --- @param str string
 --- @return string
@@ -8,7 +10,7 @@ end
 
 --- @return nil
 local function generate_error_msg()
-  vim.api.nvim_echo({'lasterisk.nvim: No selected string', 'echohl'}, true, {})
+  api.nvim_echo({'lasterisk.nvim: No selected string', 'echohl'}, true, {})
 end
 
 ---@param cword string
@@ -16,7 +18,7 @@ end
 ---@return string
 local function cword_pattern(cword, config)
   if config.is_whole and fn.match(cword, '\\k') >= 0 then
-    return string.format('\\<%s\\>', cword)
+    return string.format('\\<%s\\>', fn.escape(cword, '\\'))
   else
     return cword
   end
@@ -34,6 +36,7 @@ local M = {}
 --- @param config table
 --- @return string
 M.lasterisk_do = function(config)
+  config = conf.set(config)
   local cword = escape_pattern(fn.expand('<cword>'))
   if cword == '' then
     return generate_error_msg()
