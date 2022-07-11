@@ -20,12 +20,8 @@ use 'rapan931/lasterisk.nvim'
 ## Usage
 
 ```lua
-vim.api.nvim_set_keymap('n', '*', [[<cmd>lua require("lasterisk").lasterisk_do({})<CR>]], {
-  noremap = false
-})
-vim.api.nvim_set_keymap('n', 'g*', [[<cmd>lua require("lasterisk").lasterisk_do({ is_whole = false })<CR>]], {
-  noremap = false
-})
+vim.keymap.set('n', '*',  function() require("lasterisk").lasterisk_do({}) end)
+vim.keymap.set('n', 'g*', function() require("lasterisk").lasterisk_do({ is_whole = false }) end)
 ```
 
 ## Todo
