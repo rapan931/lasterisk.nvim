@@ -1,8 +1,5 @@
 local config = {
-  direction = true,
-  do_jump = false,
   is_whole = true,
-  keeppos = false
 }
 
 local M = {}
