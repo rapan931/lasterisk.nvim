@@ -35,7 +35,7 @@ local M = {}
 
 --- @param config table
 --- @return string
-M.lasterisk_do = function(config)
+M.search = function(config)
   config = conf.set(config)
   local cword = escape_pattern(fn.expand('<cword>'))
   if cword == '' then
@@ -43,7 +43,6 @@ M.lasterisk_do = function(config)
   end
 
   local pattern = cword_pattern(cword, config)
-
   vim.o.hlsearch = vim.o.hlsearch
 
   set_search(pattern)
