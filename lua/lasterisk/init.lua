@@ -22,7 +22,7 @@ end
 ---@param str string
 ---@return string
 local function escape_pattern(str)
-  return fn.escape(str, [==[~"\.^$[]*]==])
+  return fn.escape(str, [==[~\.^$[]*]==])
 end
 
 ---@return nil
