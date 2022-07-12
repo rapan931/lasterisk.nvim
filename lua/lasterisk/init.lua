@@ -1,6 +1,11 @@
-local conf = require('lasterisk.config')
 local fn = vim.fn
 local api = vim.api
+
+---@class config
+---@field is_whole boolean
+local default_config = {
+  is_whole = true,
+}
 
 --- @param str string
 --- @return string
@@ -14,7 +19,7 @@ local function generate_error_msg()
 end
 
 --- @param cword string
---- @param config table
+--- @param config config
 --- @return string
 local function cword_pattern(cword, config)
   if config.is_whole and fn.match(cword, '\\k') >= 0 then
@@ -32,9 +37,9 @@ end
 
 local M = {}
 
---- @param config table
-M.search = function(config)
-  config = conf.set(config)
+--- @param override_config config
+M.search = function(override_config)
+  local config = vim.tbl_deep_extend('force', default_config, override_config)
   local cword = escape_pattern(fn.expand('<cword>'))
   if cword == '' then
     return generate_error_msg()
