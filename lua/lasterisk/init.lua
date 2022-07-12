@@ -44,7 +44,7 @@ M.search = function(config)
   vim.o.hlsearch = vim.o.hlsearch
 
   set_search(pattern)
-  print("/" .. fn.escape(pattern, '\\"'))
+  print("/" .. pattern)
 end
 
 return M
