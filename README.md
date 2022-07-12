@@ -20,7 +20,7 @@ use 'rapan931/lasterisk.nvim'
 ## Usage
 
 ```lua
-vim.keymap.set('n', '*',  function() require("lasterisk").search({}) end)
+vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
 vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = false }) end)
 ```
 

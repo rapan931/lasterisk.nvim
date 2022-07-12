@@ -7,20 +7,32 @@ local default_config = {
   is_whole = true,
 }
 
---- @param str string
---- @return string
+---@generic T : any
+---@varargs T
+---@return T | {}
+local function handle_args(...)
+  local args = {...}
+  if #args == 0 then
+    return {}
+  end
+
+  return args[1]
+end
+
+---@param str string
+---@return string
 local function escape_pattern(str)
   return fn.escape(str, [==[~"\.^$[]*]==])
 end
 
---- @return nil
+---@return nil
 local function generate_error_msg()
   api.nvim_echo({'lasterisk.nvim: No selected string', 'echohl'}, true, {})
 end
 
---- @param cword string
---- @param config config
---- @return string
+---@param cword string
+---@param config config
+---@return string
 local function cword_pattern(cword, config)
   if config.is_whole and fn.match(cword, '\\k') >= 0 then
     return string.format('\\<%s\\>', fn.escape(cword, '\\'))
@@ -29,7 +41,7 @@ local function cword_pattern(cword, config)
   end
 end
 
---- @param pattern string
+---@param pattern string
 local function set_search(pattern)
   fn.setreg('/', pattern)
   fn.histadd('/', pattern)
@@ -37,9 +49,9 @@ end
 
 local M = {}
 
---- @param override_config config
-M.search = function(override_config)
-  local config = vim.tbl_deep_extend('force', default_config, override_config)
+---@vararg config
+M.search = function(...)
+  local config = vim.tbl_deep_extend('force', default_config, handle_args(...))
   local cword = escape_pattern(fn.expand('<cword>'))
   if cword == '' then
     return generate_error_msg()
