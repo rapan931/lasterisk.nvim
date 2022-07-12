@@ -13,9 +13,9 @@ local function generate_error_msg()
   api.nvim_echo({'lasterisk.nvim: No selected string', 'echohl'}, true, {})
 end
 
----@param cword string
----@param config table
----@return string
+--- @param cword string
+--- @param config table
+--- @return string
 local function cword_pattern(cword, config)
   if config.is_whole and fn.match(cword, '\\k') >= 0 then
     return string.format('\\<%s\\>', fn.escape(cword, '\\'))
@@ -25,7 +25,6 @@ local function cword_pattern(cword, config)
 end
 
 --- @param pattern string
---- @return nil
 local function set_search(pattern)
   fn.setreg('/', pattern)
   fn.histadd('/', pattern)
@@ -34,7 +33,6 @@ end
 local M = {}
 
 --- @param config table
---- @return string
 M.search = function(config)
   config = conf.set(config)
   local cword = escape_pattern(fn.expand('<cword>'))
