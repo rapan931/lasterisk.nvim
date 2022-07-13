@@ -1,7 +1,7 @@
 local fn = vim.fn
 local api = vim.api
 
----@class config
+---@class LasteriskConfig
 ---@field is_whole boolean
 local default_config = {
   is_whole = true,
@@ -31,7 +31,7 @@ local function generate_error_msg()
 end
 
 ---@param cword string
----@param config config
+---@param config LasteriskConfig
 ---@return string
 local function cword_pattern(cword, config)
   if config.is_whole and fn.match(cword, '\\k') >= 0 then
@@ -49,7 +49,7 @@ end
 
 local M = {}
 
----@vararg config
+---@vararg LasteriskConfig
 M.search = function(...)
   local config = vim.tbl_deep_extend('force', default_config, handle_args(...))
   local cword = escape_pattern(fn.expand('<cword>'))
