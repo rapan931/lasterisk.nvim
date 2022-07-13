@@ -32,8 +32,8 @@ vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = fa
 
 ## Differences from asterisk.vim
 
-- Not support backward(like `#`).
-- Not support jump asterisk.
-- Not support visual mode blockwise.
+- Not support backward(like `#`)
+- Not support jump asterisk(like default `*`)
+- Not support visual mode blockwise
 - Not support `exclusive` in the selection option
 - Not support keep cursor position
