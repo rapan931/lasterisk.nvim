@@ -21,6 +21,7 @@ use 'rapan931/lasterisk.nvim'
 
 ```lua
 vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
+vim.keymap.set('x', '*', function() require("lasterisk").search() end)
 vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = false }) end)
 ```
 
@@ -28,7 +29,8 @@ vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = fa
 
 - [x] Stay asterisk(like `*`)
 - [x] `is_whole = false` option(like `g*`)
-- [ ] Visual asterisk
+- [x] Visual asterisk(Visual by line)
+- [ ] Visual asterisk(Visual by character)
 
 ## Differences from asterisk.vim
 
