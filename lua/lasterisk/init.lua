@@ -25,7 +25,7 @@ end
 
 ---@return nil
 local function generate_error_msg()
-  api.nvim_echo({'lasterisk.nvim: No selected string', 'echohl'}, true, {})
+  api.nvim_echo({{'lasterisk.nvim: No selected string', 'WarningMsg'}}, true, {})
 end
 
 ---@param cword string
