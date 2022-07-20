@@ -1,6 +1,6 @@
 # lasterisk.nvim
-The [asterisk.vim](https://github.com/haya14busa/vim-asterisk) is great plugin.  
-This is asterisk.vim written in lua
+The [vim-asterisk](https://github.com/haya14busa/vim-asterisk) is great plugin.  
+This is vim-asterisk written in lua
 
 ## Install
 
@@ -35,7 +35,7 @@ vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = fa
 - [x] Visual asterisk(by line)
 - [x] Visual asterisk(by character)
 
-## Differences from asterisk.vim
+## Differences from vim-asterisk
 
 - Not support backward(like `#`)
 - Not support jump asterisk(like default `*`)
