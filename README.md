@@ -21,16 +21,19 @@ use 'rapan931/lasterisk.nvim'
 
 ```lua
 vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
-vim.keymap.set('x', '*', function() require("lasterisk").search() end)
 vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = false }) end)
+vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = false }) end)
+
+-- not support visual asterisk & is_whole = true
+-- vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
 ```
 
 ## Todo
 
 - [x] Stay asterisk(like `*`)
 - [x] `is_whole = false` option(like `g*`)
-- [x] Visual asterisk(Visual by line)
-- [ ] Visual asterisk(Visual by character)
+- [x] Visual asterisk(by line)
+- [x] Visual asterisk(by character)
 
 ## Differences from asterisk.vim
 

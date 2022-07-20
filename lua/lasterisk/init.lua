@@ -23,11 +23,6 @@ local function handle_args(...)
   return args[1]
 end
 
----@return nil
-local function generate_error_msg()
-  api.nvim_echo({{'lasterisk.nvim: No selected string', 'WarningMsg'}}, true, {})
-end
-
 ---@param cword string
 ---@param config LasteriskConfig
 ---@return string
@@ -70,63 +65,65 @@ end
 ---@return string selected text
 local function get_selected_text(mode)
   local bufnr = api.nvim_get_current_buf()
-  local v_pos = vim.list_slice(fn.getpos("v"), 2, 3)
-  local dot_pos = vim.list_slice(fn.getpos("."), 2, 3)
+  local v_pos = vim.list_slice(fn.getcharpos("v"), 2, 3)
+  local dot_pos = vim.list_slice(fn.getcharpos("."), 2, 3)
 
   local start_pos, end_pos = sort_pos(v_pos, dot_pos)
-  local region = vim.region(bufnr, start_pos, end_pos, mode, true)
-
-  local linenrs = vim.tbl_keys(region)
-  table.sort(linenrs)
 
   local lines
   if mode == "V" then
-    lines = api.nvim_buf_get_lines(bufnr, linenrs[1] - 1, linenrs[#linenrs], false)
+    lines = api.nvim_buf_get_lines(bufnr, start_pos[1] - 1, end_pos[1], false)
   elseif mode == 'v' then
-    -- TODO
-    lines = {}
+    lines = api.nvim_buf_get_lines(bufnr, start_pos[1] - 1, end_pos[1], false)
+    if #lines == 1 then
+      lines[1] = fn.strcharpart(lines[1], start_pos[2] - 1, end_pos[2] - start_pos[2] + 1)
+    else
+      lines[1] = fn.strcharpart(lines[1], start_pos[2] - 1)
+      lines[#lines] = fn.strcharpart(lines[#lines], 0, end_pos[2])
+    end
   else
     lines = {}
   end
   return fn.join(vim.tbl_map(function(line) return fn.escape(line, [[\/]]) end, lines), [[\n]])
 end
 
-local function visual_search(mode)
-  local pattern = [[\V]] .. get_selected_text(mode)
-  local view = fn.winsaveview()
-  vim.o.hlsearch = vim.o.hlsearch
-
-  set_search(pattern)
-  print("/" .. pattern)
-  api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>',true,false,true),'n',true)
-  fn.winrestview(view)
-end
-
-local function normal_search(config)
-  local cword = fn.escape(fn.expand('<cword>'), [==[~\.^$[]*]==])
-  if cword == '' then
-    return generate_error_msg()
-  end
-
-  local pattern = cword_pattern(cword, config)
-
-  vim.o.hlsearch = vim.o.hlsearch
-
-  set_search(pattern)
-  print("/" .. pattern)
-end
-
 local M = {}
 
+--- lasterisk.nvim main func
 ---@vararg LasteriskConfig
 M.search = function(...)
   local config = vim.tbl_deep_extend('force', default_config, handle_args(...))
 
   local mode = fn.mode()
+  if config.is_whole == true and (mode == 'v' or mode == 'V') then
+    api.nvim_echo({{'lasterisk.nvim: Not support, visual asterisk and is_whole: true!', 'WarningMsg'}}, true, {})
+    return
+  end
+
+  local pattern
+  local view
   if mode == 'n' then
-    normal_search(config)
+    local cword = fn.escape(fn.expand('<cword>'), [==[~\.^$[]*]==])
+    if cword == '' then
+      api.nvim_echo({{'lasterisk.nvim: No selected string', 'WarningMsg'}}, true, {})
+      return
+    end
+
+    pattern = cword_pattern(cword, config)
+
   elseif mode == 'v' or mode == 'V' then
-    visual_search(mode)
+    pattern = [[\V]] .. get_selected_text(mode)
+    view = fn.winsaveview()
+  end
+
+  -- vim.v.searchforward = 1
+  vim.o.hlsearch = vim.o.hlsearch
+  set_search(pattern)
+  api.nvim_echo({{"/" .. pattern}}, false, {})
+
+  if mode == 'v' or mode == 'V' then
+    api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>',true,false,true),'n',true)
+    fn.winrestview(view)
   end
 end
 
