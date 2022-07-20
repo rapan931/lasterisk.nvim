@@ -25,7 +25,7 @@ vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = fa
 vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = false }) end)
 
 -- not support visual asterisk & is_whole = true
--- vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
+-- vim.keymap.set('x', '*',  function() require("lasterisk").search() end)
 ```
 
 ## Todo
