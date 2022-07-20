@@ -116,7 +116,6 @@ M.search = function(...)
     view = fn.winsaveview()
   end
 
-  -- vim.v.searchforward = 1
   vim.o.hlsearch = vim.o.hlsearch
   set_search(pattern)
   api.nvim_echo({{"/" .. pattern}}, false, {})
