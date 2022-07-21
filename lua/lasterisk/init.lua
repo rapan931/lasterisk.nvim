@@ -64,25 +64,19 @@ end
 ---@param mode string 'V' | 'v'
 ---@return string selected text
 local function get_selected_text(mode)
-  local bufnr = api.nvim_get_current_buf()
   local v_pos = vim.list_slice(fn.getcharpos("v"), 2, 3)
   local dot_pos = vim.list_slice(fn.getcharpos("."), 2, 3)
 
   local start_pos, end_pos = sort_pos(v_pos, dot_pos)
 
-  local lines
-  if mode == "V" then
-    lines = api.nvim_buf_get_lines(bufnr, start_pos[1] - 1, end_pos[1], false)
-  elseif mode == 'v' then
-    lines = api.nvim_buf_get_lines(bufnr, start_pos[1] - 1, end_pos[1], false)
+  local lines = fn.getline(start_pos[1], end_pos[1])
+  if mode == 'v' then
     if #lines == 1 then
       lines[1] = fn.strcharpart(lines[1], start_pos[2] - 1, end_pos[2] - start_pos[2] + 1)
     else
       lines[1] = fn.strcharpart(lines[1], start_pos[2] - 1)
       lines[#lines] = fn.strcharpart(lines[#lines], 0, end_pos[2])
     end
-  else
-    lines = {}
   end
   return fn.join(vim.tbl_map(function(line) return fn.escape(line, [[\/]]) end, lines), [[\n]])
 end
