@@ -95,6 +95,11 @@ M.search = function(...)
   local config = vim.tbl_deep_extend('force', default_config, handle_args(...))
 
   local mode = fn.mode()
+  if mode ~= 'n' and mode ~= 'V' and mode ~= 'v' then
+    api.nvim_echo({{'lasterisk.nvim: support normal, visual by character, visual by line only!', 'WarningMsg'}}, true, {})
+    return
+  end
+
   if config.is_whole == true and (mode == 'v' or mode == 'V') then
     api.nvim_echo({{'lasterisk.nvim: Not support, visual asterisk and is_whole: true!', 'WarningMsg'}}, true, {})
     return
