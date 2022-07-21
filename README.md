@@ -37,7 +37,7 @@ vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = fa
 
 ## Differences from vim-asterisk
 
-- Not support Visual asterisk and `is_whole = true`
+- Not support visual asterisk and `is_whole = true`
 - Not support backward(like `#`)
 - Not support jump asterisk(like default `*`)
 - Not support visual mode blockwise
