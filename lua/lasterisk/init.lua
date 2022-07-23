@@ -117,7 +117,7 @@ M.search = function(...)
 
   vim.o.hlsearch = vim.o.hlsearch
   set_search(pattern)
-  api.nvim_echo({{"/" .. pattern}}, false, {})
+  api.nvim_echo({{pattern}}, false, {})
 
   if mode == 'v' or mode == 'V' then
     api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>',true,false,true),'n',true)
