@@ -28,6 +28,20 @@ vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = fa
 -- vim.keymap.set('x', '*',  function() require("lasterisk").search() end)
 ```
 
+use [nvim-hlslens](https://github.com/kevinhwang91/nvim-hlslens)
+
+```lua
+vim.keymap.set('n', '*', function()
+  require("lasterisk").search()
+  require('hlslens').start()
+end)
+
+vim.keymap.set({'n', 'x'}, 'g*', function()
+  require("lasterisk").search({ is_whole = false })
+  require('hlslens').start()
+end)
+```
+
 ## Todo
 
 - [x] Stay asterisk(like `*`)
