@@ -44,8 +44,8 @@ end
 ---Sort pos1 and pos2
 ---@param pos1 string[] [line, col]
 ---@param pos2 string[] [line, col]
----@return string[] [line, col]
----@return string[] [line, col]
+---@return string[] [line, col] start_pos
+---@return string[] [line, col] end_pos
 local function sort_pos(pos1, pos2)
   if pos1[1] == pos2[1] then
     if pos1[2] > pos2[2] then
