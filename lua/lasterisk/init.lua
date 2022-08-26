@@ -15,7 +15,7 @@ local default_config = {
 ---@varargs T
 ---@return T | {}
 local function handle_args(...)
-  local args = {...}
+  local args = { ... }
   if #args == 0 then
     return {}
   end
@@ -53,7 +53,7 @@ local function sort_pos(pos1, pos2)
     end
     return pos1, pos2
   else
-    if pos1[1] > pos2[1]then
+    if pos1[1] > pos2[1] then
       return pos2, pos1
     end
     return pos1, pos2
@@ -90,12 +90,13 @@ M.search = function(...)
 
   local mode = fn.mode()
   if mode ~= 'n' and mode ~= 'V' and mode ~= 'v' then
-    api.nvim_echo({{'lasterisk.nvim: support normal, visual by character, visual by line only!', 'WarningMsg'}}, true, {})
+    api.nvim_echo({ { 'lasterisk.nvim: support normal, visual by character, visual by line only!', 'WarningMsg' } }, true
+      , {})
     return
   end
 
   if config.is_whole == true and (mode == 'v' or mode == 'V') then
-    api.nvim_echo({{'lasterisk.nvim: Not support, visual asterisk and is_whole: true!', 'WarningMsg'}}, true, {})
+    api.nvim_echo({ { 'lasterisk.nvim: Not support, visual asterisk and is_whole: true!', 'WarningMsg' } }, true, {})
     return
   end
 
@@ -104,7 +105,7 @@ M.search = function(...)
   if mode == 'n' then
     local cword = fn.escape(fn.expand('<cword>'), [==[~\.^$[]*]==])
     if cword == '' then
-      api.nvim_echo({{'lasterisk.nvim: No selected string', 'WarningMsg'}}, true, {})
+      api.nvim_echo({ { 'lasterisk.nvim: No selected string', 'WarningMsg' } }, true, {})
       return
     end
 
@@ -117,10 +118,10 @@ M.search = function(...)
 
   vim.o.hlsearch = vim.o.hlsearch
   set_search(pattern)
-  api.nvim_echo({{pattern}}, false, {})
+  api.nvim_echo({ { pattern } }, false, {})
 
   if mode == 'v' or mode == 'V' then
-    api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>',true,false,true),'n',true)
+    api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>', true, false, true), 'n', true)
     fn.winrestview(view)
   end
 end
