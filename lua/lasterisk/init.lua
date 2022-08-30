@@ -42,10 +42,10 @@ local function set_search(pattern)
 end
 
 ---Sort pos1 and pos2
----@param pos1 string[] [line, col]
----@param pos2 string[] [line, col]
----@return string[] [line, col] start_pos
----@return string[] [line, col] end_pos
+---@param pos1 number[] [line, col]
+---@param pos2 number[] [line, col]
+---@return number[] [line, col] start_pos
+---@return number[] [line, col] end_pos
 local function sort_pos(pos1, pos2)
   if pos1[1] == pos2[1] then
     if pos1[2] > pos2[2] then
@@ -121,7 +121,7 @@ M.search = function(...)
   api.nvim_echo({ { pattern } }, false, {})
 
   if mode == 'v' or mode == 'V' then
-    api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>', true, false, true), 'n', true)
+    api.nvim_feedkeys(api.nvim_replace_termcodes('<esc>', true, false, true), 'n', false)
     fn.winrestview(view)
   end
 end
