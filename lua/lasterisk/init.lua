@@ -78,12 +78,7 @@ local function get_selected_text(mode)
       lines[#lines] = fn.strcharpart(lines[#lines], 0, end_pos[2])
     end
   end
-  return fn.join(
-    vim.tbl_map(function(line)
-      return fn.escape(line, [[\/]])
-    end, lines),
-    [[\n]]
-  )
+  return fn.join(vim.tbl_map(function(line) return fn.escape(line, [[\/]]) end, lines), [[\n]])
 end
 
 local M = {}
