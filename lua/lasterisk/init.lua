@@ -114,7 +114,7 @@ M.search = function(...)
     view = fn.winsaveview()
   end
 
-  vim.o.hlsearch = vim.o.hlsearch
+  vim.opt.hlsearch = vim.opt.hlsearch
   set_search(pattern)
   api.nvim_echo({ { pattern } }, false, {})
 
