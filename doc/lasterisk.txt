@@ -1,0 +1,79 @@
+*lasterisk.txt*    asterisk extension
+
+==============================================================================
+CONTENTS                                                  *lasterisk-contents*
+
+  1. INTRO....................................... |lasterisk-intro|
+  2. INSTALL..................................... |lasterisk-install|
+  3. FUNCTIONS................................... |lasterisk-functions|
+  4. MAPPING EXAMPLES............................ |lasterisk-mapping-examples|
+
+==============================================================================
+INTRO                                                        *lasterisk-intro*
+
+The |vim-asterisk| is great plugin. This is |vim-asterisk| written in lua
+https://github.com/haya14busa/vim-asterisk
+
+==============================================================================
+INSTALL                                                    *lasterisk-install*
+
+* https://github.com/wbthomason/packer.nvim
+* https://github.com/tani/vim-jetpack >lua
+
+    use("rapan931/lasterisk.nvim")
+<
+==============================================================================
+FUNCTIONS                                                *lasterisk-functions*
+
+To use the function, need the following. >lua
+  require("lasterisk").start()
+<
+start({opts})                                                *lasterisk.run()*
+  Search without moving the cursor.
+
+  Parameters: ~
+    • {opts} (table|nil) Optional keyword arguments:
+
+      • is_whole (boolean): Search whole keywords, like with
+        the "\<charactors\>". Defaults to true.
+      • silent (boolean): Do not display search string on command-line.
+        Defaults to false.
+
+==============================================================================
+MAPPING EXAMPLES                                   *lasterisk-mapping-examples*
+
+mapping examples.
+>lua
+  vim.keymap.set('n', '*',  function() require("lasterisk").search() end)
+
+  vim.keymap.set('n', 'g*', function()
+    require("lasterisk").search({ is_whole = false })
+  end)
+
+  vim.keymap.set('x', 'g*', function()
+    require("lasterisk").search({ is_whole = false })
+  end)
+
+  -- not support visual asterisk & is_whole = true
+  -- vim.keymap.set('x', '*',  function() require("lasterisk").search() end)
+<
+not echo search characters
+>lua
+  vim.keymap.set('n', '*',  function()
+    require("lasterisk").search({ silent = true })
+  end)
+<
+with |nvim-hlslens|
+>lua
+  -- with nvim-hlslens
+  vim.keymap.set('n', '*', function()
+    require("lasterisk").search()
+    require('hlslens').start()
+  end)
+
+  vim.keymap.set({'n', 'x'}, 'g*', function()
+    require("lasterisk").search({ is_whole = false })
+    require('hlslens').start()
+  end)
+<
+vim:tw=78:ts=2:sw=2:sts=2:et:ft=help:
