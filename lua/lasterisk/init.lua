@@ -5,31 +5,19 @@ local api = vim.api
 --   print(vim.inspect(obj))
 -- end
 
----@class LasteriskConfig
+---@class LasteriskOptions
 ---@field is_whole boolean
 ---@field silent boolean
-local default_config = {
+local default_option = {
   is_whole = true,
   silent = false,
 }
 
----@generic T : any
----@varargs T
----@return T | {}
-local function handle_args(...)
-  local args = { ... }
-  if #args == 0 then
-    return {}
-  end
-
-  return args[1]
-end
-
 ---@param cword string
----@param config LasteriskConfig
+---@param option LasteriskOptions
 ---@return string
-local function cword_pattern(cword, config)
-  if config.is_whole and fn.match(cword, "\\k") >= 0 then
+local function cword_pattern(cword, option)
+  if option.is_whole and fn.match(cword, "\\k") >= 0 then
     return string.format("\\<%s\\>", fn.escape(cword, "\\"))
   else
     return cword
@@ -86,9 +74,9 @@ end
 local M = {}
 
 --- lasterisk.nvim main func
----@vararg LasteriskConfig
-M.search = function(...)
-  local config = vim.tbl_deep_extend("force", default_config, handle_args(...))
+---@param opts LasteriskOptions|nil
+M.search = function(opts)
+  local option = vim.tbl_deep_extend("force", default_option, opts or {})
 
   local mode = fn.mode()
   if mode ~= "n" and mode ~= "V" and mode ~= "v" then
@@ -96,7 +84,7 @@ M.search = function(...)
     return
   end
 
-  if config.is_whole == true and (mode == "v" or mode == "V") then
+  if option.is_whole == true and (mode == "v" or mode == "V") then
     api.nvim_echo({ { "lasterisk.nvim: Not support, visual asterisk and is_whole: true!", "WarningMsg" } }, true, {})
     return
   end
@@ -110,7 +98,7 @@ M.search = function(...)
       return
     end
 
-    pattern = cword_pattern(cword, config)
+    pattern = cword_pattern(cword, option)
   elseif mode == "v" or mode == "V" then
     pattern = [[\V]] .. get_selected_text(mode)
     view = fn.winsaveview()
@@ -118,7 +106,7 @@ M.search = function(...)
 
   vim.opt.hlsearch = vim.opt.hlsearch
   set_search(pattern)
-  if config.silent ~= true then
+  if option.silent ~= true then
     api.nvim_echo({ { pattern } }, false, {})
   end
 
