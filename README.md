@@ -14,7 +14,7 @@ Plug 'rapan931/lasterisk.nvim'
 [vim-jetpack](https://github.com/tani/vim-jetpack)
 
 ```lua
-use 'rapan931/lasterisk.nvim'
+use('rapan931/lasterisk.nvim')
 ```
 
 ## Usage
@@ -28,8 +28,14 @@ vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = fa
 -- vim.keymap.set('x', '*',  function() require("lasterisk").search() end)
 ```
 
-use [nvim-hlslens](https://github.com/kevinhwang91/nvim-hlslens)
+not echo search characters
+```lua
+vim.keymap.set('n', '*',  function() require("lasterisk").search({ silent = true }) end)
+vim.keymap.set('n', 'g*', function() require("lasterisk").search({ is_whole = false, silent = true}) end)
+vim.keymap.set('x', 'g*', function() require("lasterisk").search({ is_whole = false, silent = true}) end)
+```
 
+use [nvim-hlslens](https://github.com/kevinhwang91/nvim-hlslens)
 ```lua
 vim.keymap.set('n', '*', function()
   require("lasterisk").search()

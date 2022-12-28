@@ -7,8 +7,10 @@ local api = vim.api
 
 ---@class LasteriskConfig
 ---@field is_whole boolean
+---@field silent boolean
 local default_config = {
   is_whole = true,
+  silent = false,
 }
 
 ---@generic T : any
@@ -116,7 +118,9 @@ M.search = function(...)
 
   vim.opt.hlsearch = vim.opt.hlsearch
   set_search(pattern)
-  api.nvim_echo({ { pattern } }, false, {})
+  if config.silent ~= true then
+    api.nvim_echo({ { pattern } }, false, {})
+  end
 
   if mode == "v" or mode == "V" then
     api.nvim_feedkeys(api.nvim_replace_termcodes("<esc>", true, false, true), "n", false)
