@@ -4,12 +4,6 @@ This is vim-asterisk written in lua
 
 ## Install
 
-[vim-plug](https://github.com/junegunn/vim-plug)
-
-```vim
-Plug 'rapan931/lasterisk.nvim'
-```
-
 [packer.nvim](https://github.com/wbthomason/packer.nvim)  
 [vim-jetpack](https://github.com/tani/vim-jetpack)
 
